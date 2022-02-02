@@ -25,6 +25,9 @@ while True:
     ax.axes.xaxis.set_visible(False)
     ax.axes.yaxis.set_visible(False)
 
+    # Запись в файл
+    plt.savefig('visual_random_walk.png', bbox_inches='tight')
+
     plt.show()
 
     keep_running = input("Make another walk? (y/n): ")
