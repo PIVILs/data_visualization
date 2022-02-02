@@ -5,6 +5,7 @@ from random_walk import RandomWalk
 while True:
     # Построение случайного блуждания и нанесение точек на диаграмму.
     rw = RandomWalk(50000)
+    rw.get_step()
     rw.fill_walk()
 
     # Назначение размера области просмотра.
