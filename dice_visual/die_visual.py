@@ -1,5 +1,6 @@
 from die import Die
-import pygal
+from plotly.graph_objs import Bar, Layout
+from plotly import offline
 
 # Создание кубика D6.
 die = Die()
@@ -17,14 +18,11 @@ for value in range(1, die.num_sides+1):
     frequencies.append(frequency)
 
 # Визуализация результатов
-hist = pygal.Bar()
+x_values = list(range(1, die.num_sides+1))
+data = [Bar(x=x_values, y=frequencies)]
 
-hist.title = "Results of rolling one D6 1000 times."
-
-hist.x_labels = [x_label for x_label in range(min(results), max(results)+1)]
-
-hist.x_title = "Result"
-hist.y_title = "Frequency of Result"
-
-hist.add('D6', frequencies)
-hist.render_to_file('die_visual.svg')
+x_axis_config = {'title': 'Result'}
+y_axis_config = {'title': 'Frequency of Result'}
+my_layout = Layout(title='Results of rolling one D6 1000 times.',
+                   xaxis=x_axis_config, yaxis=y_axis_config)
+offline.plot({'data': data, 'layout': my_layout}, filename='d6.html')
