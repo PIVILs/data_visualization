@@ -15,19 +15,24 @@ with open(filename) as f:
 # Чтение температур и дат из файла.
     dates, highs, lows = [], [], []
     for row in reader:
-        high = int(row[3])
-        highs.append(high)
-        low = int(row[4])
-        lows.append(low)
-        current_date = datetime.strptime(row[2], "%Y-%m-%d")
-        dates.append(current_date)
+        try:
+            high = int(row[3])
+            low = int(row[4])
+            current_date = datetime.strptime(row[2], "%Y-%m-%d")
+        except ValueError:
+            print(current_date, 'missing data')
+        else:
+            highs.append(high)
+            lows.append(low)
+            dates.append(current_date)
 
 # Нанесение данных на диаграмму.
 plt.style.use('seaborn')
 fig = plt.figure(dpi=128, figsize=(10, 6))
 ax = fig.add_subplot(111)
-plt.plot(dates, highs, c='red')
-plt.plot(dates, lows, c='blue')
+plt.plot(dates, highs, c='red', alpha=0.5)
+plt.plot(dates, lows, c='blue', alpha=0.5)
+plt.fill_between(dates, highs, lows, facecolor='blue', alpha=0.1)
 
 plt.title("Daily high and low temperatures - 2021\nDallas, TX")
 plt.xlabel('', fontsize=16)
